@@ -99,7 +99,7 @@ python -m pip install -r requirements.txt
 
 ### 2. Dataset Setup
 Due to storage limits, the pasture image files are not tracked in this repository. 
-- Download the dataset from the following link: **`[[DATASET](https://drive.google.com/drive/folders/1XyH6rTynUgFEjCnEm1h6Tj9Mf8ud9cNk)]`**
+- Download the dataset from the following link: [DATASET](https://drive.google.com/drive/folders/1XyH6rTynUgFEjCnEm1h6Tj9Mf8ud9cNk)
 - Unpack/copy the image files into a directory named `Images/` in the root of this project. The directory structure should look like:
   ```text
   ├── Biomass-prediction-using-LTN-...
@@ -117,7 +117,7 @@ Due to storage limits, the pasture image files are not tracked in this repositor
 ## Exploratory Data Analysis (EDA)
 
 You can explore the detailed data analysis, principal component analysis (PCA), class imbalance checks, correlation studies, and agricultural logic validation directly in the provided Jupyter Notebook:
-*   [biomass_ltn_analysis.ipynb](file:///c:/Users/HP/Desktop/LTN/biomass_ltn_analysis.ipynb)
+*   [biomass_ltn_analysis.ipynb](biomass_ltn_analysis.ipynb)
 
 ---
 
