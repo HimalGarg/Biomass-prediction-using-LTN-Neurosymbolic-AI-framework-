@@ -1,87 +1,94 @@
-# Biomass Logical Tensor Network
+# Biomass Prediction Using Logical Tensor Networks (LTN)
 
-This project implements the PDF brief for neuro-symbolic biomass prediction with
-Logical Tensor Networks. It uses the local `train.csv` and `Images/` folder, plus
-the cloned reference implementation at `external/logictensornetworks`.
+This repository contains a neuro-symbolic framework for predicting pasture biomass by combining visual inputs (pasture plots) with categorical/numeric agricultural metadata using **Logical Tensor Networks (LTN)**.
 
-## What Is Built
+Logical Tensor Networks integrate deep learning perception with symbolic domain knowledge (fuzzy logic rules). This ensures that predictions satisfy key agronomic equations and constraints while maintaining high regression accuracy.
 
-- image + tabular metadata fusion model
-- five-output biomass regression head
-- LTN objective using the official TensorFlow LTN package
-- soft biomass consistency rules:
-  - `Dry_Total_g = Dry_Clover_g + Dry_Dead_g + Dry_Green_g`
-  - `GDM_g = Dry_Clover_g + Dry_Green_g`
-  - non-negative masses
-  - derived masses are at least as large as their components
-- neural-only and symbolic-only baselines
-- per-target metrics, rule-violation metrics, prediction CSVs, and generated run reports
-- auto-generated training curves, predicted-vs-actual scatters, and rule-violation bar charts
-- data analysis script with EDA, PCA, and correlation analysis
+---
 
-## Environment
+## 🚀 Getting Started
+
+### 1. Prerequisites & Environment Setup
+Clone the repository, create a virtual environment, and install dependencies. This codebase is compatible with Windows (utilizing TensorFlow 2.10.1 and NumPy 1.23.5 for native Windows GPU/CPU compatibility) as well as Linux/macOS.
 
 ```powershell
+# Clone the repository
+git clone https://github.com/HimalGarg/Biomass-prediction-using-LTN-Neurosymbolic-AI-framework-.git
+cd Biomass-prediction-using-LTN-Neurosymbolic-AI-framework-
+
+# Create a virtual environment
 python -m venv .venv
-.\.venv\Scripts\python -m pip install --upgrade pip
-.\.venv\Scripts\python -m pip install -r requirements.txt
+
+# Activate the virtual environment
+# On Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+# On Linux/macOS:
+source .venv/bin/activate
+
+# Install dependencies
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
 
-The current workspace already has the virtual environment prepared.
+### 2. Dataset Setup
+Due to storage limits, the pasture image files are not tracked in this repository. 
+- Download the dataset from the following link: **`[INSERT DATASET DOWNLOAD LINK HERE]`**
+- Unpack/copy the image files into a directory named `Images/` in the root of this project. The directory structure should look like:
+  ```text
+  ├── Biomass-prediction-using-LTN-...
+  │   ├── Images/
+  │   │   ├── ID1011485656.jpg
+  │   │   ├── ID1012260530.jpg
+  │   │   └── ...
+  │   ├── train.csv
+  │   ├── train.py
+  │   └── ...
+  ```
 
-## Data Analysis
+---
 
-Run the standalone EDA script to produce analysis figures:
+## 📊 Exploratory Data Analysis (EDA)
 
+You can explore the detailed data analysis, principal component analysis (PCA), class imbalance checks, correlation studies, and agricultural logic validation directly in the provided Jupyter Notebook:
+*   [biomass_ltn_analysis.ipynb](file:///c:/Users/HP/Desktop/LTN/biomass_ltn_analysis.ipynb)
+
+---
+
+## 🏃 Running the Code
+
+### Quick Smoke Test
+To verify the training loop, environment setup, and LTN grounding run a quick 1-epoch test with a subset of the dataset:
 ```powershell
-.\.venv\Scripts\python analyze_data.py
+python train.py --mode ltn --epochs 1 --image-size 64 --batch-size 8 --limit-samples 40 --no-augment
 ```
 
-This generates publication-ready figures in `analysis_figures/`:
-- target distributions with KDE
-- correlation heatmap (targets + features)
-- feature distributions and boxplots by State
-- target pairwise scatter matrix
-- additive rule verification on ground-truth labels
-- PCA of tabular features colored by biomass and species
-- sample images by species
-- biomass breakdown by category
-
-## Quick Smoke Test
-
+### Reproduce Optimal Tuned Run (Neural vs. Symbolic vs. LTN)
+To reproduce the optimal model configuration that successfully balances regression performance ($R^2$) with physical/logic constraint satisfaction (Huber loss, softplus activation, state-stratified splits, and tuned logical constraints), execute:
 ```powershell
-.\.venv\Scripts\python train.py --mode ltn --epochs 1 --image-size 64 --batch-size 8 --limit-samples 40 --no-augment
+python train.py --mode all --epochs 40 --image-size 160 --batch-size 8 --backbone mobilenetv2 --mobilenet-weights imagenet --ltn-weight 0.01 --rule-tolerance 0.12
 ```
 
-## Full Comparison
+---
 
-```powershell
-.\.venv\Scripts\python train.py --mode all --epochs 40 --image-size 128 --batch-size 16
-```
+## ⚙️ Key Technical Features
 
-The LTN run uses a supervised warm-up by default, then ramps in the rule loss. To make the
-logic stricter, increase `--ltn-weight`; to make the equations softer, increase
-`--rule-tolerance`. Early stopping is enabled by default (`--patience 10`); set
-`--patience 0` to disable.
+1.  **State-Stratified Data Splitting**: Handles geographic class imbalance across states by ensuring train, validation, and test splits preserve the distribution of the `State` column.
+2.  **Softplus Activation Regressor**: Replaces bounded sigmoid or dead-ReLU activations with a continuous, positive-only `softplus` ($f(x) = \log(1 + e^x)$) function, avoiding target prediction zero-locks ("dead ReLUs").
+3.  **Huber Loss Objective**: Swaps standard Mean Squared Error (MSE) for Huber Loss ($\delta=0.15$), stabilizing training against outliers and skewed biomass target values.
+4.  **Agro-Fuzzy Constraints**:
+    *   `Dry_Total_g = Dry_Clover_g + Dry_Dead_g + Dry_Green_g`
+    *   `GDM_g = Dry_Clover_g + Dry_Green_g`
+    *   Non-negativity bounds.
+    *   Logical ordering constraints (e.g., aggregate weights must be greater than or equal to constituent weights).
 
-For a stronger visual encoder, use MobileNetV2:
+---
 
-```powershell
-.\.venv\Scripts\python train.py --mode all --epochs 40 --image-size 160 --batch-size 8 --backbone mobilenetv2 --mobilenet-weights imagenet
-```
+## 📂 Outputs & Artifacts
+Each run creates a timestamped output directory under `runs/` containing:
+*   `config.json`: Run configuration parameters.
+*   `run_report.md`: Markdown summary of the run metrics.
+*   `metrics_all.csv` & `rules_all.csv`: Loss, metrics, and rule violation rates.
+*   `predictions/`: Output CSV files with actual vs. predicted values.
+*   `figures/`: Generated training curves, predicted-vs-actual scatters, and logic violation comparisons.
 
-## Outputs
-
-Each run creates a timestamped folder under `runs/` containing:
-
-- `config.json`
-- `metrics_all.csv`
-- `rules_all.csv`
-- `representation_probe.csv`
-- `training_history_neural.csv` and/or `training_history_ltn.csv`
-- `predictions/*.csv`
-- `models/neural_weights.h5` and/or `models/ltn_weights.h5`
-- `figures/` — training curves, pred-vs-actual scatters, rule violations, representation PCA
-- `run_report.md`
-
-The longer design write-up is in `REPORT.md`.
+For a full technical report on the design decisions and logical grounding formulas, refer to the [REPORT.md](file:///c:/Users/HP/Desktop/LTN/REPORT.md).
