@@ -45,7 +45,13 @@ The primary perception network utilizes a multi-stream fusion architecture:
 
 Standard regression frameworks often use Mean Squared Error (MSE). However, pasture biomass data has skewed target distributions and extreme outliers. To mitigate this:
 - **Huber Loss ($\delta = 0.15$)** is implemented as the base supervised loss:
-  $$\mathcal{L}_{Huber}(y, \hat{y}) = \begin{cases} \frac{1}{2}(y - \hat{y})^2 & \text{for } |y - \hat{y}| \le \delta \\ \delta(|y - \hat{y}| - \frac{1}{2}\delta) & \text{otherwise} \end{cases}$$
+  ```math
+\mathcal{L}_{\text{Huber}}(y,\hat{y})=
+\begin{cases}
+\frac{1}{2}(y-\hat{y})^2 & \text{if } |y-\hat{y}| \le \delta \\
+\delta\left(|y-\hat{y}|-\frac{1}{2}\delta\right) & \text{otherwise}
+\end{cases}
+```
 - This makes the regression objective robust to outliers while maintaining stable gradients near zero.
 
 ---
