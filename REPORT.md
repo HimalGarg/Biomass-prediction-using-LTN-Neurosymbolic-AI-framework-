@@ -47,23 +47,13 @@ Standard regression frameworks often use Mean Squared Error (MSE). However, past
 - **Huber Loss ($\delta = 0.15$)** is implemented as the base supervised loss:
 - **Huber Loss (δ = 0.15)** is implemented as the base supervised loss:
 
-For small errors:
+  - If |y − ŷ| ≤ δ:
+    
+    $$\frac{1}{2}(y-\hat{y})^2$$
 
-$$
-\mathcal{L}_{Huber}(y,\hat{y})
-=
-\frac{1}{2}(y-\hat{y})^2
-\qquad \text{when } |y-\hat{y}| \le \delta
-$$
-
-For large errors:
-
-$$
-\mathcal{L}_{Huber}(y,\hat{y})
-=
-\delta\left(|y-\hat{y}|-\frac{1}{2}\delta\right)
-\qquad \text{when } |y-\hat{y}| > \delta
-$$
+  - Otherwise:
+    
+    $$\delta\left(|y-\hat{y}|-\frac{1}{2}\delta\right)$$
 - This makes the regression objective robust to outliers while maintaining stable gradients near zero.
 
 ---
