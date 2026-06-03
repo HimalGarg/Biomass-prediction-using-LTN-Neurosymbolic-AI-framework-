@@ -1,0 +1,36 @@
+============================================================
+DATASET OVERVIEW
+============================================================
+Total rows (long format CSV): 1785
+Unique pasture images:        357
+Unique States:                4  ['NSW', 'Tas', 'Vic', 'WA']
+Unique Species:               15
+
+Target summary statistics:
+       Dry_Clover_g  Dry_Dead_g  Dry_Green_g  Dry_Total_g   GDM_g
+count        357.00      357.00       357.00       357.00  357.00
+mean           6.65       12.04        26.62        45.32   33.27
+std           12.12       12.40        25.40        27.98   24.94
+min            0.00        0.00         0.00         1.04    1.04
+25%            0.00        3.20         8.80        25.27   16.03
+50%            1.42        7.98        20.80        40.30   27.11
+75%            7.24       17.64        35.08        57.88   43.68
+max           71.79       83.84       157.98       185.70  157.98
+
+Missing values per column:
+image_path              0
+Sampling_Date           0
+State                   0
+Species                 0
+Pre_GSHH_NDVI           0
+Height_Ave_cm           0
+Dry_Clover_g            0
+Dry_Dead_g              0
+Dry_Green_g             0
+Dry_Total_g             0
+GDM_g                   0
+image_id                0
+image_file              0
+Sampling_Date_parsed    0
+Month                   0
+DayOfYear               0

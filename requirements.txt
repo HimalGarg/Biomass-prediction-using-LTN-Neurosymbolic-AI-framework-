@@ -1,0 +1,10 @@
+-e ./external/logictensornetworks
+numpy==1.23.5
+pandas==1.5.3
+scikit-learn==1.2.2
+Pillow>=10
+matplotlib>=3.7
+seaborn>=0.12
+tabulate>=0.9
+tensorflow==2.10.1; platform_system == "Windows"
+tensorflow>=2.10,<2.16; platform_system != "Windows"
