@@ -140,8 +140,8 @@ python train.py --mode all --epochs 40 --image-size 160 --batch-size 8 --backbon
 ## Key Technical Features
 
 1.  **State-Stratified Data Splitting**: Handles geographic class imbalance across states by ensuring train, validation, and test splits preserve the distribution of the `State` column.
-2.  **Softplus Activation Regressor**: Replaces bounded sigmoid or dead-ReLU activations with a continuous, positive-only `softplus` `($f(x) = \log(1 + e^x)$)` function, avoiding target prediction zero-locks ("dead ReLUs").
-3.  **Huber Loss Objective**: Swaps standard Mean Squared Error (MSE) for Huber Loss ($\delta=0.15$), stabilizing training against outliers and skewed biomass target values.
+2.  **Softplus Activation Regressor**: Replaces bounded sigmoid or dead-ReLU activations with a continuous, positive-only `softplus` `f(x) = \log(1 + e^x)` function, avoiding target prediction zero-locks ("dead ReLUs").
+3.  **Huber Loss Objective**: Swaps standard Mean Squared Error (MSE) for Huber Loss (`delta=0.15`), stabilizing training against outliers and skewed biomass target values.
 4.  **Agro-Fuzzy Constraints**:
     *   `Dry_Total_g = Dry_Clover_g + Dry_Dead_g + Dry_Green_g`
     *   `GDM_g = Dry_Clover_g + Dry_Green_g`

@@ -61,15 +61,15 @@ We define real-valued regression predicates that measure how closely a statement
 1.  **Data Fitting**: The predicted values should match the observed targets ($y$):
     $$\forall x, \text{Close}(f(x), y)$$
 2.  **Total Mass Decomposition**: The sum of the parts must equal the total mass:
-    $$\forall x, \text{Dry\_Total\_g} \approx \text{Dry\_Clover\_g} + \text{Dry\_Dead\_g} + \text{Dry\_Green\_g}$$
+    $$\forall x, \text{Dry Total (g)} \approx \text{Dry Clover (g)} + \text{Dry Dead (g)} + \text{Dry Green (g)}$$
 3.  **Green Dry Matter (GDM) Composition**: Green dry matter must equal green plus clover biomass:
-    $$\forall x, \text{GDM\_g} \approx \text{Dry\_Clover\_g} + \text{Dry\_Green\_g}$$
+    $$\forall x, \text{GDM (g)} \approx \text{Dry Clover (g)} + \text{Dry Green (g)}$$
 4.  **Logical Ordering (Part-Whole Constraint)**: Aggregate masses must be greater than or equal to their component parts:
-    $$\forall x, \text{Dry\_Total\_g} \ge \text{Dry\_Clover\_g}$$
-    $$\forall x, \text{Dry\_Total\_g} \ge \text{Dry\_Dead\_g}$$
-    $$\forall x, \text{Dry\_Total\_g} \ge \text{Dry\_Green\_g}$$
-    $$\forall x, \text{GDM\_g} \ge \text{Dry\_Clover\_g}$$
-    $$\forall x, \text{GDM\_g} \ge \text{Dry\_Green\_g}$$
+    $$\forall x, \text{Dry Total (g)} \ge \text{Dry Clover (g)}$$
+    $$\forall x, \text{Dry Total (g)} \ge \text{Dry Dead (g)}$$
+    $$\forall x, \text{Dry Total (g)} \ge \text{Dry Green (g)}$$
+    $$\forall x, \text{GDM (g)} \ge \text{Dry Clover (g)}$$
+    $$\forall x, \text{GDM (g)} \ge \text{Dry Green (g)}$$
 
 ### Optimization Objective:
 The loss function combines the supervised regression loss with the logical satisfiability ($\phi$) calculated using fuzzy logic operators (p-mean error):
