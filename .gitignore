@@ -6,3 +6,4 @@ runs/
 *.egg-info/
 analysis_figures/
 Images/
+train.csv
