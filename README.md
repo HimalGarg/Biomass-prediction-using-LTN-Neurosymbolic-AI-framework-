@@ -118,9 +118,20 @@ Due to storage limits, the pasture image files are not tracked in this repositor
 
 You can explore the detailed data analysis, principal component analysis (PCA), class imbalance checks, correlation studies, and agricultural logic validation directly in the provided Jupyter Notebook:
 *   [biomass_ltn_analysis.ipynb](biomass_ltn_analysis.ipynb)
+*   To execute the notebook refer 
+
+### Running EDA Notebook
+Create separate directory and virtual enviornment for the EDA notebook.
+
+Run:
+```powershell
+pip install -r requirements_EDA.txt
+```
+NOTE:
+*   Use Python 3.10 only.
+*   Put train.csv and Images dataset folders in the same directory as the notebook.
 
 ---
-
 ## Running the Code
 
 ### Quick Smoke Test
@@ -158,4 +169,4 @@ Each run creates a timestamped output directory under `runs/` containing:
 *   `predictions/`: Output CSV files with actual vs. predicted values.
 *   `figures/`: Generated training curves, predicted-vs-actual scatters, and logic violation comparisons.
 
-For a full technical report on the design decisions and logical grounding formulas, refer to the [REPORT.md](file:///c:/Users/HP/Desktop/LTN/REPORT.md).
+For a full technical report on the design decisions and logical grounding formulas, refer to the [REPORT.md](REPORT.md).

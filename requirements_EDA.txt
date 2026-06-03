@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib
+seaborn
+scipy
+scikit-learn
+opencv-python
+Pillow
+tqdm
+plotly
+umap-learn
+tensorflow
+shap
